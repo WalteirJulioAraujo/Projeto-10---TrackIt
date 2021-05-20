@@ -7,12 +7,14 @@ import TodayHabits from "./TodayHabits";
 import History from "./History";
 
 import GlobalStyle from "../styles/GlobalStyle";
+import UserContext from '../contexts/UserContext';
 
 export default function App(){
     const [user, setUser] = useState({});
     
     return(
         <>
+        <UserContext.Provider value={{user, setUser}}>
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact>
@@ -33,6 +35,7 @@ export default function App(){
                 </Switch>
             </BrowserRouter>
             <GlobalStyle />
+        </UserContext.Provider>
         </>
     )
 }
