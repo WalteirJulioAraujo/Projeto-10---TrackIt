@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { FaCheckSquare } from "react-icons/fa";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
 
 export default function TodayHabit({
@@ -10,6 +10,7 @@ export default function TodayHabit({
     RenderTodayHabits,
 }) {
     const { user } = useContext(UserContext);
+    
 
     function DoneOrNot() {
         if (!infoHabit.done) {

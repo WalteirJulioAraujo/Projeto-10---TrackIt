@@ -4,8 +4,9 @@ import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
 import Day from "./Day.js";
 import Habit from "./Habit.js";
+import Loader from "react-loader-spinner";
 
-export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
+export default function MyHabits({ habits, addHabit, setAddHabit,setHabits, loading,setLoading }) {
     const [infoHabitName, setInfoHabitName] = useState("");
     const [infoHabitDays, setInfoHabitDays] = useState([]);
     const { user } = useContext(UserContext);
@@ -41,12 +42,16 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
             setAddHabit(false);
             setInfoHabitName("");
             setInfoHabitDays([]);
+            setLoading(true)
             request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
             });
-            request.then((e)=>setHabits(e.data));
+            request.then((e)=>{
+                setHabits(e.data)
+                setLoading(false);
+            });
             setDisabled(false);
         })
         request.catch(()=>{
@@ -89,9 +94,9 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
                 </NewHabit>
                 </>
             )}
-            <AllHabits>
+            {!loading?<AllHabits>
                 {habits.map((e)=><Habit infoHabit={e} setHabits={setHabits} addHabit={addHabit}/>)}
-            </AllHabits>
+            </AllHabits>:<LoaderContainer><Loader type="ThreeDots" color="#00BFFF" background-color='#52b6ff' height={40} width={80} /></LoaderContainer>}
         </Content>
     );
 }
@@ -172,3 +177,11 @@ const Buttons = styled.div`
 const AllHabits = styled.div`
     margin-bottom:90px;
 `;
+
+
+const LoaderContainer = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 130px;
+
+`

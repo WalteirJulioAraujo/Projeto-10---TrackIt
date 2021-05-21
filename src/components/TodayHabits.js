@@ -9,10 +9,12 @@ import dayjs from "dayjs";
 import styled from "styled-components";
 import "dayjs/locale/pt-br";
 import CompleteContext from "../contexts/CompleteContext";
+import Loader from "react-loader-spinner";
 
 export default function TodayHabits({ todayHabits, setTodayHabits }) {
     const { user } = useContext(UserContext);
     const { completeTask, setCompleteTask } = useContext(CompleteContext);
+    const [loading, setLoading] = useState(true)
     
     
     const config = {
@@ -33,6 +35,7 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
             console.log(e.data);
             console.log(e.data.filter((x) => x.done).length / e.data.length);
             setCompleteTask(e.data.filter((x) => x.done).length / e.data.length);
+            setLoading(false)
         });
         request.catch(() => {
             console.log(
@@ -44,7 +47,11 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
 
     useEffect(RenderTodayHabits, []);
 
-        
+    if(loading){
+        return(
+            <LoaderContainer><Loader type="ThreeDots" color="#00BFFF" background-color='#52b6ff' height={40} width={80} /></LoaderContainer>
+        )
+    }    
     
 
     return (
@@ -86,4 +93,11 @@ const Today = styled.div`
         font-size: 18px;
         color: black;
     }
+`;
+
+const LoaderContainer = styled.div`
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 130px;
+
 `;

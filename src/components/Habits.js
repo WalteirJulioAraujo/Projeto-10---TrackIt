@@ -6,11 +6,13 @@ import Header from './Header';
 import MyHabits from './MyHabits'
 import styled from 'styled-components'
 
+
 export default function Habits(){
     const { user } = useContext(UserContext);
     const [habits, setHabits] =useState([]);
     const [addHabit, setAddHabit] = useState(false);
-
+    const [loading, setLoading] = useState(true);
+ 
     console.log(user);
     const config = {
         headers: {
@@ -23,6 +25,7 @@ export default function Habits(){
         request.then((e)=>{
             setHabits(e.data)
             console.log("peguei a array com os habitos - history page")
+            setLoading(false)
         })
         request.catch(()=>{
             console.log("erro ao pegar  array com os habitos - history page")
@@ -37,7 +40,7 @@ export default function Habits(){
             <span>Meus Hábitos</span>
             <div onClick={()=>addHabit?setAddHabit(false):setAddHabit(true)}>+</div>
         </Title>
-        <MyHabits habits={habits} addHabit={addHabit} setAddHabit={setAddHabit} setHabits={setHabits}/>
+        <MyHabits habits={habits} addHabit={addHabit} setAddHabit={setAddHabit} setHabits={setHabits} loading={loading} setLoading={setLoading}/>
         <Footer />
         </>
     )
