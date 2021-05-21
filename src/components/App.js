@@ -11,6 +11,7 @@ import UserContext from '../contexts/UserContext';
 
 export default function App(){
     const [user, setUser] = useState({});
+    const [backgroundWhite, setBackgroundWhite] = useState(false)
     
     return(
         <>
@@ -34,7 +35,7 @@ export default function App(){
                     </Route>
                 </Switch>
             </BrowserRouter>
-            <GlobalStyle />
+            <GlobalStyle backgroundWhite/>
         </UserContext.Provider>
         </>
     )

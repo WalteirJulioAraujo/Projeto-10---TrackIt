@@ -4,7 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext" 
 
-export default function LogIn() {
+export default function LogIn({setBackgroundWhite}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory();
