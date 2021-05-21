@@ -35,7 +35,7 @@ export default function Habits(){
         <Header image={ user.image }/>
         <Title>
             <span>Meus Hábitos</span>
-            <button onClick={()=>addHabit?setAddHabit(false):setAddHabit(true)}>+</button>
+            <div onClick={()=>addHabit?setAddHabit(false):setAddHabit(true)}>+</div>
         </Title>
         <MyHabits habits={habits} addHabit={addHabit} setAddHabit={setAddHabit} setHabits={setHabits}/>
         <Footer />
@@ -54,11 +54,17 @@ const Title =  styled.div`
     span{
         font-size: 23px;
     }
-    button{
-        background-color: #126BA5;
+    div{
+        background-color: #52B6FF;
         color: #fff;
-        font-size: 26px;
+        font-size: 28px;
         width: 40px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        cursor: pointer;
     }
 
 `

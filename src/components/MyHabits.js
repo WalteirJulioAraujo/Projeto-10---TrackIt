@@ -47,6 +47,7 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
                 },
             });
             request.then((e)=>setHabits(e.data));
+            setDisabled(false);
         })
         request.catch(()=>{
             console.log("habito nao foi enviado");
@@ -82,14 +83,14 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
                         ))}
                     </div>
                     <Buttons>
-                        <button onClick={()=>setAddHabit(false)}>Cancelar</button>
-                        <button onClick={sendHabit}>Salvar</button>
+                        <div className="cancel" onClick={()=>setAddHabit(false)}>Cancelar</div>
+                        <div className="save" onClick={sendHabit}>Salvar</div>
                     </Buttons>
                 </NewHabit>
                 </>
             )}
             <AllHabits>
-                {habits.map((e)=><Habit infoHabit={e} setHabits={setHabits}/>)}
+                {habits.map((e)=><Habit infoHabit={e} setHabits={setHabits} addHabit={addHabit}/>)}
             </AllHabits>
         </Content>
     );
@@ -105,26 +106,67 @@ const Content = styled.div`
     }
 
     .dias {
-        width: fit-content;
+        width: 90%;
         display: flex;
         margin: 0 auto;
+        justify-content:flex-start;
+        margin-bottom: 36px;
     }
 `;
 
 const NewHabit = styled.div`
     width: 90%;
     margin: 20px auto 0 auto;
-    background: #e5e5e5;
+    background: #fff;
+    padding-top: 18px;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
 
     input {
         display: block;
         width: 90%;
+        height: 45px;
         margin: 0 auto;
         margin-top: 18px;
+        border: 1px solid #d4d4d4;
+        border-radius: 5px;
+        font-size:19px;
+        margin-bottom: 10px;
+    }
+
+    input::placeholder{
+        color:#dbdbdb;
+        font-size:19px;
     }
 `;
 
-const Buttons = styled.div``;
+const Buttons = styled.div`
+    width:90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size:17px;
+
+    .save{
+        width:84px;
+        height:35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #52B6FF;
+        border-radius: 5px;
+        color: #fff;
+        margin-left: 8px;
+        cursor: pointer;
+    }
+
+    .cancel{
+        cursor: pointer;
+        color: #52B6FF;
+    }
+`;
 
 
 const AllHabits = styled.div`

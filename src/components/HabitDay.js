@@ -2,8 +2,9 @@ import axios from 'axios';
 import { useContext } from 'react';
 import styled from 'styled-components'
 import UserContext from '../contexts/UserContext';
+import { TrashBinOutline } from 'react-ionicons'
 
-export default function HabitDay({selectedDays, id, setHabits}){
+export default function HabitDay({selectedDays, id, setHabits,addHabit}){
     console.log(selectedDays);
     const { user } = useContext(UserContext);
 
@@ -42,12 +43,18 @@ export default function HabitDay({selectedDays, id, setHabits}){
         <Days>
             {days.map((e)=>{
                 if(selectedDays.includes(e.dayNumber)){
-                    return(<DayContainerSelected>{e.dayName}</DayContainerSelected>)
+                    return(<DayContainerSelected addHabit={addHabit}>{e.dayName}</DayContainerSelected>)
                 }else{
-                    return(<DayContainer>{e.dayName}</DayContainer>)
+                    return(<DayContainer addHabit={addHabit}>{e.dayName}</DayContainer>)
                 }
             })}
-            <button onClick={()=>DeleteHabit(id)}>Deletar</button>
+            <TrashBinOutline
+                color={'#870d0d'} 
+                height="28px"
+                width="23px"
+                onClick={()=>DeleteHabit(id)}
+                className='Icon'
+            />
         </Days>
     )
 }
@@ -55,7 +62,10 @@ export default function HabitDay({selectedDays, id, setHabits}){
 const Days =  styled.div`
     display: flex;
 
-    
+    .Icon{
+        cursor:pointer;
+        margin-left: 15px;
+    }
 `
 
 
@@ -63,16 +73,17 @@ const DayContainer = styled.div`
     width: 30px;
     height: 30px;
     font-size: 20px;
-    border: 1px solid black;
+    border: 1px solid #CFCFCF;
     border-radius: 5px;
     display: flex;
     justify-content:center;
     align-items: center;
     margin-right: 4px;
-    background-color: red;
+    background-color: #fff;
+    color: #CFCFCF;
 
     &:hover{
-        cursor:pointer;
+        cursor:default
     }
 
 `
@@ -80,15 +91,16 @@ const DayContainerSelected = styled.div`
     width: 30px;
     height: 30px;
     font-size: 20px;
-    border: 1px solid black;
+    border: 1px solid #CFCFCF;
     border-radius: 5px;
     display: flex;
     justify-content:center;
     align-items: center;
     margin-right: 4px;
-    background-color: green;
+    color: #fff;
+    background-color: #CFCFCF;
 
     &:hover{
-        cursor:pointer;
+        cursor: default
     }
 `
