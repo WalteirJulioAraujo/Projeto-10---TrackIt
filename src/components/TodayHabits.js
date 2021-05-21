@@ -7,10 +7,12 @@ import Header from "./Header";
 import TodayHabit from "./TodayHabit";
 import dayjs from "dayjs";
 import styled from "styled-components";
+import "dayjs/locale/pt-br";
+import CompleteContext from "../contexts/CompleteContext";
 
 export default function TodayHabits({ todayHabits, setTodayHabits }) {
     const { user } = useContext(UserContext);
-    
+    const { completeTask, setCompleteTask } = useContext(CompleteContext);
     
     
     const config = {
@@ -29,6 +31,8 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
             setTodayHabits(e.data);
             console.log("peguei a array com os habitos de hoje- Today page");
             console.log(e.data);
+            console.log(e.data.filter((x) => x.done).length / e.data.length);
+            setCompleteTask(e.data.filter((x) => x.done).length / e.data.length);
         });
         request.catch(() => {
             console.log(
@@ -40,11 +44,7 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
 
     useEffect(RenderTodayHabits, []);
 
-   
-    
-    let completeTask =(todayHabits.filter((e) => e.done).length / todayHabits.length);
-    
-    
+        
     
 
     return (
@@ -54,7 +54,7 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
                     .locale("pt-br")
                     .format("D/MM")}`}
                 {completeTask ? (
-                    <p>{`${(completeTask*100).toFixed(2)}% dos hábitos concluídos`}</p>
+                    <p style={{color: "#8FC549"}}>{`${(completeTask*100).toFixed(0)}% dos hábitos concluídos`}</p>
                 ) : (
                     <p>Nenhum hábito concluido ainda</p>
                 )}
@@ -62,18 +62,18 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
             <Header image={user.image} />
             <Container>
                 {todayHabits.map((e) => (
-                    <TodayHabit infoHabit={e} setTodayHabits={setTodayHabits} RenderTodayHabits={RenderTodayHabits}/>
+                    <TodayHabit infoHabit={e} setTodayHabits={setTodayHabits} RenderTodayHabits={RenderTodayHabits} />
                 ))}
             </Container>
             
-            <Footer todayHabits={todayHabits}/>
+            <Footer todayHabits={todayHabits} />
         </>
     );
 }
 const Container = styled.div`
     width: 100%;
     margin-top:28px;
-    margin-bottom: 90px;
+    margin-bottom: 100px;
 `
 const Today = styled.div`
     width: 90%;

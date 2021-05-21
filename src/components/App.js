@@ -6,18 +6,20 @@ import Habits from "./Habits";
 import TodayHabits from "./TodayHabits";
 import History from "./History";
 import HabitContext from "../contexts/HabitContext"
+import CompĺeteContext from "../contexts/CompleteContext"
 
 import GlobalStyle from "../styles/GlobalStyle";
 import UserContext from '../contexts/UserContext';
 
 
 export default function App(){
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(undefined);
     const [todayHabits, setTodayHabits] = useState([]);
-    const [backgroundWhite, setBackgroundWhite] = useState(false)
+    const [ completeTask, setCompleteTask ] = useState(0);
     
     return(
         <>
+        <CompĺeteContext.Provider value={{completeTask, setCompleteTask}}>
         <HabitContext.Provider value={{todayHabits, setTodayHabits}}>
         <UserContext.Provider value={{user, setUser}}>
             <BrowserRouter>
@@ -39,9 +41,10 @@ export default function App(){
                     </Route>
                 </Switch>
             </BrowserRouter>
-            <GlobalStyle backgroundWhite/>
-        </UserContext.Provider>
+            <GlobalStyle user={user}/>
+        </UserContext.Provider >
         </HabitContext.Provider>
+        </CompĺeteContext.Provider>
         </>
     )
 }

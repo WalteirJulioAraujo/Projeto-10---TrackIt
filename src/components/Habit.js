@@ -13,4 +13,7 @@ export default function Habit({infoHabit,setHabits}){
 const Container = styled.div`
     width: 90%;
     height: 91px;
+    h1{
+        font-size:21px;
+    }
 `

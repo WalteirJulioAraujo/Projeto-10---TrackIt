@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
     body{
-        background-color: #f2f2f2;
+        background-color: ${(props)=>props.user?'#f2f2f2':'#fff'};
         font-family: 'Lexend Deca', sans-serif;
     }
 `;

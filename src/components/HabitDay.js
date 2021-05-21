@@ -54,6 +54,8 @@ export default function HabitDay({selectedDays, id, setHabits}){
 
 const Days =  styled.div`
     display: flex;
+
+    
 `
 
 
@@ -69,6 +71,10 @@ const DayContainer = styled.div`
     margin-right: 4px;
     background-color: red;
 
+    &:hover{
+        cursor:pointer;
+    }
+
 `
 const DayContainerSelected = styled.div`
     width: 30px;
@@ -82,4 +88,7 @@ const DayContainerSelected = styled.div`
     margin-right: 4px;
     background-color: green;
 
+    &:hover{
+        cursor:pointer;
+    }
 `

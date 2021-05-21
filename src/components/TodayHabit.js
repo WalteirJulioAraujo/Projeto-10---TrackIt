@@ -4,48 +4,63 @@ import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
 
-
-
-export default function TodayHabit({ infoHabit, setTodayHabits, RenderTodayHabits }) {
+export default function TodayHabit({
+    infoHabit,
+    setTodayHabits,
+    RenderTodayHabits,
+}) {
     const { user } = useContext(UserContext);
-   
+
     function DoneOrNot() {
-        
         if (!infoHabit.done) {
-            const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${infoHabit.id}/check`,{},
-            {headers: {
-                Authorization: `Bearer ${user.token}`,
-            }},
-            );
-            request.then(() => console.log("habito marcado como feito"));
-            request.catch(() => console.log("erro ao marcar o habito"));
-            
-        }else{
             const request = axios.post(
-                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${infoHabit.id}/uncheck`,{},
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${infoHabit.id}/check`,
+                {},
                 {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
                 }
             );
-            request.then(() => console.log("Habito desmarcado"));
+            request.then(() => {
+                console.log("habito marcado como feito");
+                RenderTodayHabits();
+            });
+            request.catch(() => console.log("erro ao marcar o habito"));
+        } else {
+            const request = axios.post(
+                `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${infoHabit.id}/uncheck`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`,
+                    },
+                }
+            );
+            request.then(() => {
+                console.log("Habito desmarcado");
+                RenderTodayHabits();
+            });
             request.catch(() => console.log("erro ao desmarcar o habito"));
         }
-        RenderTodayHabits();
     }
 
     return (
         <Habit>
-            <HabitName>
-                <h1>{infoHabit.name}</h1>
-                <span>Sequência atual: {infoHabit.currentSequence} dias</span>
-                <span>Seu recorde: {infoHabit.highestSequence} dias</span>
-            </HabitName>
-            <Box
+            <HabitName
                 done={infoHabit.done}
-                onClick={DoneOrNot}
+                current={infoHabit.currentSequence}
+                highest={infoHabit.highestSequence}
             >
+                <h1>{infoHabit.name}</h1>
+                <span className="current">
+                    Sequência atual: {infoHabit.currentSequence} dias
+                </span>
+                <span className="highest">
+                    Seu recorde: {infoHabit.highestSequence} dias
+                </span>
+            </HabitName>
+            <Box done={infoHabit.done} onClick={DoneOrNot}>
                 <FaCheckSquare className="Icon" />
             </Box>
         </Habit>
@@ -67,12 +82,24 @@ const HabitName = styled.div`
     margin-left: 10px;
     display: flex;
     flex-direction: column;
+    color: #666666;
 
     h1 {
         margin-bottom: 7px;
     }
     span {
         margin-top: 2px;
+        font-size: 17px;
+        color: #666666;
+    }
+    .current {
+        color: ${(props) => (props.done ? "#8FC549" : "#666666")};
+    }
+    .highest {
+        color: ${(props) =>
+            props.current === props.highest && props.done
+                ? "#8FC549"
+                : "#666666"};
     }
 `;
 
@@ -84,6 +111,6 @@ const Box = styled.div`
     .Icon {
         width: 100%;
         height: 100%;
-        color: ${(props) => (props.done ? "green" : "black")};
+        color: ${(props) => (props.done ? "#8FC549" : "#EBEBEB")};
     }
 `;
