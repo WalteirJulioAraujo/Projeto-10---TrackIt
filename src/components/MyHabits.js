@@ -3,11 +3,13 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext.js";
 import Day from "./Day.js";
+import Habit from "./Habit.js";
 
-export default function MyHabits({ habits, addHabit, setAddHabit }) {
+export default function MyHabits({ habits, addHabit, setAddHabit,setHabits }) {
     const [infoHabitName, setInfoHabitName] = useState("");
     const [infoHabitDays, setInfoHabitDays] = useState([]);
     const { user } = useContext(UserContext);
+    const [disabled, setDisabled] = useState(false);
 
     const days = [
         { dayName: "D", dayNumber: 0 },
@@ -21,7 +23,8 @@ export default function MyHabits({ habits, addHabit, setAddHabit }) {
     console.log(infoHabitName);
 
     function sendHabit() {
-        const request = axios.post(
+        setDisabled(true);
+        let request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             {
                 name: infoHabitName,
@@ -33,24 +36,39 @@ export default function MyHabits({ habits, addHabit, setAddHabit }) {
                 },
             }
         );
-        request.then((e)=>console.log(e.data))
-        request.catch(()=>console.log("habito nao foi enviado"))
+        request.then((e)=>{
+            console.log(e.data)
+            setAddHabit(false);
+            setInfoHabitName("");
+            setInfoHabitDays([]);
+            request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",{
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+            });
+            request.then((e)=>setHabits(e.data));
+        })
+        request.catch(()=>{
+            console.log("habito nao foi enviado");
+            alert("erro ao enviar o habito");
+            setDisabled(false);
+        })
     }
 
     return (
         <Content>
-            {habits.length || (
-                <span>
+            {habits.length==0?<span>
                     Você não tem nenhum hábito cadastrado ainda. Adicione um
                     hábito para começar a trackear!
-                </span>
-            )}
+                </span>:""}
             {addHabit && (
+                <>
                 <NewHabit>
                     <input
-                        placeholder="nome do hábito"
+                        placeholder="Nome do hábito"
                         onChange={(e) => setInfoHabitName(e.target.value)}
                         value={infoHabitName}
+                        disabled={disabled}
                     />
                     <div className="dias">
                         {days.map((e) => (
@@ -59,15 +77,20 @@ export default function MyHabits({ habits, addHabit, setAddHabit }) {
                                 dayNumber={e.dayNumber}
                                 setInfoHabitDays={setInfoHabitDays}
                                 infoHabitDays={infoHabitDays}
+                                disabled={disabled}
                             />
                         ))}
                     </div>
                     <Buttons>
-                        <button>Cancelar</button>
+                        <button onClick={()=>setAddHabit(false)}>Cancelar</button>
                         <button onClick={sendHabit}>Salvar</button>
                     </Buttons>
                 </NewHabit>
+                </>
             )}
+            <AllHabits>
+                {habits.map((e)=><Habit infoHabit={e} setHabits={setHabits}/>)}
+            </AllHabits>
         </Content>
     );
 }
@@ -102,3 +125,8 @@ const NewHabit = styled.div`
 `;
 
 const Buttons = styled.div``;
+
+
+const AllHabits = styled.div`
+    margin-bottom:90px;
+`;

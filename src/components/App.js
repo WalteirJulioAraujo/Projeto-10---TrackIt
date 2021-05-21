@@ -5,16 +5,20 @@ import SignIn from "./SignIn";
 import Habits from "./Habits";
 import TodayHabits from "./TodayHabits";
 import History from "./History";
+import HabitContext from "../contexts/HabitContext"
 
 import GlobalStyle from "../styles/GlobalStyle";
 import UserContext from '../contexts/UserContext';
 
+
 export default function App(){
     const [user, setUser] = useState({});
+    const [todayHabits, setTodayHabits] = useState([]);
     const [backgroundWhite, setBackgroundWhite] = useState(false)
     
     return(
         <>
+        <HabitContext.Provider value={{todayHabits, setTodayHabits}}>
         <UserContext.Provider value={{user, setUser}}>
             <BrowserRouter>
                 <Switch>
@@ -28,7 +32,7 @@ export default function App(){
                         <Habits />
                     </Route>
                     <Route path="/hoje" exact>
-                        <TodayHabits />
+                        <TodayHabits todayHabits={todayHabits} setTodayHabits={setTodayHabits}/>
                     </Route>
                     <Route path="/historico" exact>
                         <History />
@@ -37,6 +41,7 @@ export default function App(){
             </BrowserRouter>
             <GlobalStyle backgroundWhite/>
         </UserContext.Provider>
+        </HabitContext.Provider>
         </>
     )
 }

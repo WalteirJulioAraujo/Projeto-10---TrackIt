@@ -1,24 +1,20 @@
 import { useState } from 'react';
 import styled from 'styled-components'
 
-export default function Days({day, dayNumber, setInfoHabitDays, infoHabitDays}){
-    const [color,setColor] = useState(false);
-
+export default function Day({day, dayNumber, setInfoHabitDays, infoHabitDays, disabled}){
+   
     function SelectedDay(e){
         console.log(infoHabitDays)
         if(!infoHabitDays.includes(e)){
             setInfoHabitDays([...infoHabitDays,e]);
-            setColor(true);
-            
-            
+
         }else{
             setInfoHabitDays(infoHabitDays.filter((day)=>day!==e));
-            setColor(false);
         }   
     }
 
     return(
-        <Container color={color} onClick={()=>SelectedDay(dayNumber)}>{day}</Container>
+        <Container dayNumber={dayNumber} infoHabitDays={infoHabitDays} onClick={!disabled?()=>SelectedDay(dayNumber):""}>{day}</Container>
     )
 }
 
@@ -32,6 +28,10 @@ const Container = styled.div`
     justify-content:center;
     align-items: center;
     margin-right: 4px;
-    color: ${(props)=>props.color?'green':'black'};
+    color: ${(props)=>props.infoHabitDays.includes(props.dayNumber)?'green':'black'};
+
+    &:hover{
+        cursor:pointer;
+    }
 `
 

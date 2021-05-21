@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { CircularProgressbar } from 'react-circular-progressbar';
 
-export default function Footer(){
+export default function Footer({todayHabits}){
+    
+    
     return(
         <Container>
             <span><Link to="/habitos">Hábitos</Link></span>
@@ -25,6 +28,11 @@ const Container = styled.div`
     span{
         font-size: 18px;
         color: #FFF;
+    }
+    div{
+        width: 100px;
+        height: 100px;
+        font-size: 18px;
     }
 
 `

@@ -19,7 +19,7 @@ export default function Habits(){
     }
     console.log(config);
     useEffect(()=>{
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",config);
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config);
         request.then((e)=>{
             setHabits(e.data)
             console.log("peguei a array com os habitos - history page")
@@ -35,9 +35,9 @@ export default function Habits(){
         <Header image={ user.image }/>
         <Title>
             <span>Meus Hábitos</span>
-            <button onClick={()=>setAddHabit(true)}>+</button>
+            <button onClick={()=>addHabit?setAddHabit(false):setAddHabit(true)}>+</button>
         </Title>
-        <MyHabits habits={habits} addHabit={addHabit} setAddHabit={setAddHabit}/>
+        <MyHabits habits={habits} addHabit={addHabit} setAddHabit={setAddHabit} setHabits={setHabits}/>
         <Footer />
         </>
     )
@@ -57,6 +57,8 @@ const Title =  styled.div`
     button{
         background-color: #126BA5;
         color: #fff;
+        font-size: 26px;
+        width: 40px;
     }
 
 `

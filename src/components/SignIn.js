@@ -9,9 +9,11 @@ export default function SignIn() {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
+    const [disabled, setDisabled] = useState(false);
     let history = useHistory();
 
     function sendInfo() {
+        setDisabled(true);
         const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up",
             {
@@ -21,23 +23,36 @@ export default function SignIn() {
                 password,
             }
         );
-        request.then(()=>{
+        request.then(() => {
             history.push("/");
-            console.log("Consegui enviar os dados - sign in page")
-        })
-        request.catch(()=>{
+            console.log("Consegui enviar os dados - sign in page");
+        });
+        request.catch(() => {
+            setDisabled(false);
             alert("Erro ao enviar cadastro");
-        })
+        });
     }
 
     return (
         <>
             <Logo>TrackIt</Logo>
-            
-            <InputsSingIn name={name} setName={setName} password={password} setPassword={setPassword} email={email} setEmail={setEmail} image={image} setImage={setImage}/>
+
+            <InputsSingIn
+                name={name}
+                setName={setName}
+                password={password}
+                setPassword={setPassword}
+                email={email}
+                setEmail={setEmail}
+                image={image}
+                setImage={setImage}
+                disabled={disabled}
+            />
 
             <Button onClick={sendInfo}>Cadastrar</Button>
-            <LogIn><Link to="/">ja tem conta?faça login</Link></LogIn>
+            <LogIn>
+                <Link to="/">ja tem conta?faça login</Link>
+            </LogIn>
         </>
     );
 }
@@ -61,7 +76,7 @@ const Button = styled.div`
     padding-top: 10px;
     display: block;
     border-radius: 5px;
-    &:hover{
+    &:hover {
         cursor: pointer;
     }
 `;
@@ -73,7 +88,7 @@ const LogIn = styled.div`
     margin: 0 auto;
     margin-top: 25px;
 
-    &:hover{
+    &:hover {
         cursor: pointer;
     }
 `;

@@ -3,14 +3,18 @@ import { useHistory, Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext" 
+import Loader from "react-loader-spinner";
 
 export default function LogIn({setBackgroundWhite}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [disabled, setDisabled] = useState(false);
     let history = useHistory();
     const { setUser } = useContext(UserContext);
+    
 
     function sendInfo() {
+        setDisabled(true);
         const request = axios.post(
             "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login",
             {
@@ -19,12 +23,13 @@ export default function LogIn({setBackgroundWhite}) {
             }
         );
         request.then((e) => {
-            history.push("/hoje");
             setUser(e.data);
+            history.push("/hoje");
             console.log("consegui acessar - log in page");
         });
         request.catch(() => {
             alert("Erro ao se conectar");
+            setDisabled(false);
         });
 
         setEmail("");
@@ -42,6 +47,7 @@ export default function LogIn({setBackgroundWhite}) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={disabled}
                 />
                 <input
                     type="password"
@@ -49,9 +55,10 @@ export default function LogIn({setBackgroundWhite}) {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    disabled={disabled}
                 />
             </Inputs>
-            <Button onClick={sendInfo}>Entrar</Button>
+            {!disabled?<Button onClick={sendInfo}>Entrar</Button>:<LoaderContainer><Loader type="ThreeDots" color="#00BFFF" background-color='#52b6ff' height={40} width={80} /></LoaderContainer>}
             <SignIn><Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link></SignIn>
         </>
     );
@@ -111,3 +118,10 @@ const SignIn = styled.div`
         cursor: pointer;
     }
 `;
+
+const LoaderContainer= styled.div`
+    width:fit-content;
+    height: 40px;
+    margin: 0 auto;
+
+`

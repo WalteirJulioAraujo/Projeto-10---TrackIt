@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export default function InputsSingIn({name,setName,password,setPassword,image,setImage,email,setEmail}){
+export default function InputsSingIn({name,setName,password,setPassword,image,setImage,email,setEmail,disabled}){
     return(
         <Inputs>
                 <input
@@ -8,24 +8,28 @@ export default function InputsSingIn({name,setName,password,setPassword,image,se
                     placeholder="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={disabled}
                 />
                 <input
                     type="password"
                     placeholder="senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={disabled}
                 />
                 <input
                     type="text"
                     placeholder="nome"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    disabled={disabled}
                 />
                 <input
                     type="text"
                     placeholder="foto"
                     value={image}
                     onChange={(e) => setImage(e.target.value)}
+                    disabled={disabled}
                 />
             </Inputs>
     )
