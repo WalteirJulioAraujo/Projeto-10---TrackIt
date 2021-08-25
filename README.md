@@ -3,9 +3,7 @@ Manage and track all your habits. Remember what and when you should be doing you
 This is the TrackIt!
 </br>
 </br>
-<img src="https://i.ibb.co/pr3cLyB/trackit-image.jpg"  width="350px" alt="App-TrackIt">
-
-</br>
+<a href="https://ibb.co/BKgbCN5"><img src="https://i.ibb.co/VpvRqmc/trackit-image.jpg" width="330px" alt="trackit-image" border="0" /></a>
 </br>
 Try it out now at https://track-it-two.vercel.app/
 
