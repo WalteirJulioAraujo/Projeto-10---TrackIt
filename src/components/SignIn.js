@@ -25,7 +25,6 @@ export default function SignIn() {
         );
         request.then(() => {
             history.push("/");
-            console.log("Consegui enviar os dados - sign in page");
         });
         request.catch(() => {
             setDisabled(false);

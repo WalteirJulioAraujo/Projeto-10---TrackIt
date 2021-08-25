@@ -7,7 +7,7 @@ import CompleteContext from "../contexts/CompleteContext";
 export default function Footer({ todayHabits }) {
 
     const { completeTask } = useContext(CompleteContext);
-    console.log(completeTask)
+    
     return (
         <Container>
             <span>

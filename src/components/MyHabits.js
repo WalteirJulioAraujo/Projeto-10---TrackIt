@@ -21,7 +21,6 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits, load
         { dayName: "S", dayNumber: 5 },
         { dayName: "S", dayNumber: 6 },
     ];
-    console.log(infoHabitName);
 
     function sendHabit() {
         setDisabled(true);
@@ -38,7 +37,6 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits, load
             }
         );
         request.then((e)=>{
-            console.log(e.data)
             setAddHabit(false);
             setInfoHabitName("");
             setInfoHabitDays([]);
@@ -55,7 +53,6 @@ export default function MyHabits({ habits, addHabit, setAddHabit,setHabits, load
             setDisabled(false);
         })
         request.catch(()=>{
-            console.log("habito nao foi enviado");
             alert("erro ao enviar o habito");
             setDisabled(false);
         })

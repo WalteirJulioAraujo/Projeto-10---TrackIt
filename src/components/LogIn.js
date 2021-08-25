@@ -25,7 +25,7 @@ export default function LogIn({setBackgroundWhite}) {
         request.then((e) => {
             setUser(e.data);
             history.push("/hoje");
-            console.log("consegui acessar - log in page");
+            
         });
         request.catch(() => {
             alert("Erro ao se conectar");

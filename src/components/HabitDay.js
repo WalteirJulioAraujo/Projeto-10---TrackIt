@@ -5,7 +5,7 @@ import UserContext from '../contexts/UserContext';
 import { TrashBinOutline } from 'react-ionicons'
 
 export default function HabitDay({selectedDays, id, setHabits,addHabit}){
-    console.log(selectedDays);
+    
     const { user } = useContext(UserContext);
 
     const days = [
@@ -30,11 +30,11 @@ export default function HabitDay({selectedDays, id, setHabits,addHabit}){
         }
         let request = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,config)
         request.then(()=>{
-            console.log('consegui deletar')
+            
             request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config);
             request.then((e)=>setHabits(e.data));
         })
-        request.catch(()=>console.log('não consegui deletar'))
+        request.catch(()=>alert('Não foi possível deletar o hábito, tente novamente'))
 
     }
 

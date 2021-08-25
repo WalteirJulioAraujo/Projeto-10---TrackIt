@@ -24,10 +24,9 @@ export default function TodayHabit({
                 }
             );
             request.then(() => {
-                console.log("habito marcado como feito");
                 RenderTodayHabits();
             });
-            request.catch(() => console.log("erro ao marcar o habito"));
+            request.catch(() => alert("erro ao marcar o habito,tente novamente"));
         } else {
             const request = axios.post(
                 `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${infoHabit.id}/uncheck`,
@@ -39,10 +38,9 @@ export default function TodayHabit({
                 }
             );
             request.then(() => {
-                console.log("Habito desmarcado");
                 RenderTodayHabits();
             });
-            request.catch(() => console.log("erro ao desmarcar o habito"));
+            request.catch(() => alert("erro ao desmarcar o habito,tente novamente"));
         }
     }
 

@@ -4,7 +4,6 @@ import styled from 'styled-components'
 export default function Day({day, dayNumber, setInfoHabitDays, infoHabitDays, disabled}){
    
     function SelectedDay(e){
-        console.log(infoHabitDays)
         if(!infoHabitDays.includes(e)){
             setInfoHabitDays([...infoHabitDays,e]);
 

@@ -31,16 +31,8 @@ export default function TodayHabits({ todayHabits, setTodayHabits }) {
         );
         request.then((e) => {
             setTodayHabits(e.data);
-            console.log("peguei a array com os habitos de hoje- Today page");
-            console.log(e.data);
-            console.log(e.data.filter((x) => x.done).length / e.data.length);
             setCompleteTask(e.data.filter((x) => x.done).length / e.data.length);
             setLoading(false)
-        });
-        request.catch(() => {
-            console.log(
-                "erro ao pegar  array com os habitos de hoje - Today page"
-            );
         });
     }
 

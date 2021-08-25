@@ -13,22 +13,19 @@ export default function Habits(){
     const [addHabit, setAddHabit] = useState(false);
     const [loading, setLoading] = useState(true);
  
-    console.log(user);
+    
     const config = {
         headers: {
             Authorization: `Bearer ${user.token}`
         }
     }
-    console.log(config);
+    
     useEffect(()=>{
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",config);
         request.then((e)=>{
             setHabits(e.data)
-            console.log("peguei a array com os habitos - history page")
+            
             setLoading(false)
-        })
-        request.catch(()=>{
-            console.log("erro ao pegar  array com os habitos - history page")
         })
     },[])
 
